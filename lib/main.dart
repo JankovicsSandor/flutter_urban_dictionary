@@ -8,24 +8,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Word Search',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+          buttonColor: Colors.deepPurple),
       darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: Colors.black45,
-        accentColor: Colors.blueGrey[800],
-      ),
+          brightness: Brightness.dark,
+          primaryColor: Colors.black45,
+          accentColor: Colors.blueGrey[800],
+          buttonColor: Colors.grey),
       home: MyHomePage(title: 'Urban dictionary'),
     );
   }
@@ -92,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: TextFormField(
                           textInputAction: TextInputAction.done,
                           decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
                             hintText: 'Enter your word',
                           ),
                           onTap: () {
@@ -102,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           onFieldSubmitted: (val) {
                             setState(() {
                               keyboardOpen = false;
-                              if (searchText != '') {
+                              if (searchText != null && searchText != '') {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -122,20 +124,22 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       RaisedButton(
                         elevation: 2.0,
-                        color: Theme.of(context).accentColor,
+                        //color: Theme.of(context).accentColor,
                         child: Text(
                           "Search",
                           style: TextStyle(color: Colors.white),
                         ),
-                        onPressed: () => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => SearchResultScreen(
-                                searchText,
+                        onPressed: () {
+                          if (searchText != null && searchText != '') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => SearchResultScreen(
+                                  searchText,
+                                ),
                               ),
-                            ),
-                          )
+                            );
+                          }
                         },
                       )
                     ],
