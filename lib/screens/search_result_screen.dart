@@ -44,6 +44,7 @@ class SearchResultScreenState extends State<SearchResultScreen> {
       List<Definition> definitionList =
           list.map((i) => Definition.fromJson(i)).toList();
 
+      definitionList.sort((a, b) => b.thumbs_up.compareTo(a.thumbs_up));
       return definitionList;
     }
 

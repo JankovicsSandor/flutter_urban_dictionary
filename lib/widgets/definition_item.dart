@@ -25,6 +25,7 @@ class DefintionItemWidget extends StatelessWidget {
                     children: <Widget>[
                       Icon(
                         Icons.thumb_up,
+                        color: Colors.greenAccent,
                         size: 20,
                       ),
                       Text(
@@ -37,6 +38,7 @@ class DefintionItemWidget extends StatelessWidget {
                     children: <Widget>[
                       Icon(
                         Icons.thumb_down,
+                        color: Colors.redAccent,
                         size: 20,
                       ),
                       Text(
@@ -54,9 +56,15 @@ class DefintionItemWidget extends StatelessWidget {
                 padding: EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Column(
                   children: <Widget>[
-                    Text(
-                      definition.definition,
-                      textAlign: TextAlign.justify,
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 12),
+                        child: Text(
+                          definition.definition,
+                          textAlign: TextAlign.justify,
+                        ),
+                      ),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
