@@ -76,6 +76,15 @@ class DefintionItemWidget extends StatelessWidget {
                         ),
                       ),
                     ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        definition.getWrittenOnDate(),
+                        style: TextStyle(
+                            fontSize: 12, fontStyle: FontStyle.italic),
+                      ),
+                    ),
                   ],
                 ),
               ),

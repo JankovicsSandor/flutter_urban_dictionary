@@ -2,8 +2,12 @@ class Definition {
   String definition;
   int thumbs_up;
   int thumbs_down;
-  String writtenOn;
+  DateTime writtenOn;
   String example;
+
+  getWrittenOnDate() {
+    return "${writtenOn.year}-${writtenOn.month}-${writtenOn.day}";
+  }
 
   Definition(
       {this.definition,
@@ -18,6 +22,6 @@ class Definition {
         example: json['example'],
         thumbs_up: json['thumbs_up'],
         thumbs_down: json['thumbs_down'],
-        writtenOn: json['written_on']);
+        writtenOn: DateTime.parse(json['written_on']));
   }
 }
