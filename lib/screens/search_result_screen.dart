@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wordsearch/models/definition.dart';
 import 'package:http/http.dart' as http;
 import 'package:wordsearch/widgets/definition_item.dart';
+import 'package:wordsearch/widgets/no_result.dart';
 
 class SearchResultScreen extends StatefulWidget {
   final String searchWord;
@@ -66,17 +67,23 @@ class SearchResultScreenState extends State<SearchResultScreen> {
         future: definitions,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return DefintionItemWidget(snapshot.data[index]);
-              },
-            );
+            if (snapshot.data.length != 0) {
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return DefintionItemWidget(snapshot.data[index]);
+                },
+              );
+            } else {
+              return NoResult();
+            }
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
 
-          return CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );

@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: Colors.black,
-        accentColor: Colors.blueGrey,
+        primaryColor: Colors.black45,
+        accentColor: Colors.blueGrey[800],
       ),
       home: MyHomePage(title: 'Urban dictionary'),
     );
@@ -72,8 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "Search your word",
-                        style: TextStyle(
-                            fontSize: 24, color: Theme.of(context).accentColor),
+                        style: TextStyle(fontSize: 24),
                       ),
                     ),
                   ],
@@ -103,14 +102,16 @@ class _MyHomePageState extends State<MyHomePage> {
                           onFieldSubmitted: (val) {
                             setState(() {
                               keyboardOpen = false;
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => SearchResultScreen(
-                                    searchText,
+                              if (searchText != '') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => SearchResultScreen(
+                                      searchText,
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              }
                             });
                           },
                           textCapitalization: TextCapitalization.sentences,
