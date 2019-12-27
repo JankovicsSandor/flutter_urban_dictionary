@@ -2,59 +2,76 @@ import 'package:flutter/material.dart';
 import 'package:wordsearch/models/definition.dart';
 
 class DefintionItemWidget extends StatelessWidget {
-  Definition definition;
+  final Definition definition;
 
-  DefintionItemWidget(@required this.definition);
+  DefintionItemWidget(this.definition);
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       padding: EdgeInsets.only(left: 8, right: 8, top: 4),
       child: Card(
         elevation: 3,
         margin: EdgeInsets.all(2),
-        child: Row(
+        child: Column(
           children: <Widget>[
-            Container(
-                padding: EdgeInsets.only(left: 10, right: 10),
-                width: MediaQuery.of(context).size.width * 0.14,
-                child: Column(
-                  children: <Widget>[
-                    Icon(
-                      Icons.thumb_up,
-                      size: 20,
-                    ),
-                    Text(
-                      "${definition.thumbs_up}",
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ],
-                )),
-            Container(
-              padding: EdgeInsets.only(top: 20, bottom: 20, left: 5, right: 5),
-              width: MediaQuery.of(context).size.width * 0.65,
-              child: Column(
+            Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text(definition.definition),
-                  Text(definition.example),
+                  Column(
+                    children: <Widget>[
+                      Icon(
+                        Icons.thumb_up,
+                        size: 20,
+                      ),
+                      Text(
+                        "${definition.thumbs_up}",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Icon(
+                        Icons.thumb_down,
+                        size: 20,
+                      ),
+                      Text(
+                        "${definition.thumbs_down}",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
-            Container(
-                padding: EdgeInsets.only(left: 10, right: 10),
-                width: MediaQuery.of(context).size.width * 0.15,
+            Padding(
+              padding: EdgeInsets.only(top: 18.0, bottom: 18.0),
+              child: Container(
+                padding: EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Column(
                   children: <Widget>[
-                    Icon(
-                      Icons.thumb_down,
-                      size: 20,
-                    ),
                     Text(
-                      "${definition.thumbs_down}",
-                      style: TextStyle(fontSize: 12),
+                      definition.definition,
+                      textAlign: TextAlign.justify,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 12),
+                        child: Text(
+                          definition.example,
+                          textAlign: TextAlign.justify,
+                        ),
+                      ),
                     ),
                   ],
-                )),
+                ),
+              ),
+            ),
           ],
         ),
       ),

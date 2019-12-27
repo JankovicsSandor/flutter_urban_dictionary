@@ -21,7 +21,12 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.black,
+        accentColor: Colors.blueGrey,
+      ),
+      home: MyHomePage(title: 'Urban dictionary'),
     );
   }
 }
@@ -47,6 +52,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String searchText;
 
+  bool keyboardOpen = false;
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -62,36 +69,94 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+          setState(() {
+            keyboardOpen = false;
+          });
+        },
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(36.0),
-                child: TextFormField(
-                  decoration: const InputDecoration.collapsed(
-                    hintText: 'Enter your word',
-                  ),
-                  textCapitalization: TextCapitalization.sentences,
-                  onChanged: (value) {
-                    searchText = value;
-                  },
+              Container(
+                height: keyboardOpen
+                    ? MediaQuery.of(context).size.height * 0.1
+                    : MediaQuery.of(context).size.height * 0.3,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Search your word",
+                        style: TextStyle(
+                            fontSize: 24, color: Theme.of(context).accentColor),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              RaisedButton(
-                elevation: 2.0,
-                child: Text(
-                  "Search",
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () => {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => SearchResultScreen(
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30))),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(36.0),
+                        child: TextFormField(
+                          textInputAction: TextInputAction.done,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter your word',
+                          ),
+                          onTap: () {
+                            setState(() {
+                              keyboardOpen = true;
+                            });
+                          },
+                          onFieldSubmitted: (val) {
+                            setState(() {
+                              keyboardOpen = false;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => SearchResultScreen(
+                                    searchText,
+                                  ),
+                                ),
+                              );
+                            });
+                          },
+                          textCapitalization: TextCapitalization.sentences,
+                          onChanged: (value) {
+                            searchText = value;
+                          },
+                        ),
+                      ),
+                      RaisedButton(
+                        elevation: 2.0,
+                        color: Theme.of(context).accentColor,
+                        child: Text(
+                          "Search",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => SearchResultScreen(
                                 searchText,
-                              )))
-                },
+                              ),
+                            ),
+                          )
+                        },
+                      )
+                    ],
+                  ),
+                ),
               )
             ],
           ),
